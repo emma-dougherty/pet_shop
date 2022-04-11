@@ -8,11 +8,14 @@ def get_total_cash(pet_shop):
     return pet_shop["admin"]["total_cash"]
 
 #Q3-Q4
-def add_or_remove_cash(amount, cash):
-    get_total_cash(amount)
-    if cash > 0 or cash < 0:
-       amount["admin"]["total_cash"] += cash
-    return amount
+# def add_or_remove_cash(amount, cash):
+#     get_total_cash(amount)
+#     if cash > 0 or cash < 0:
+#        amount["admin"]["total_cash"] += cash
+#     return amount
+
+def add_or_remove_cash(pet_shop, amount):
+    pet_shop["admin"]["total_cash"] += amount
 
 #Q5
 def get_pets_sold(pets_sold):
@@ -47,9 +50,9 @@ def remove_pet_by_name(pet_shop, name):
 
 #Q13
 def add_pet_to_stock(pet_shop, new_pet):
-    stock = len(pet_shop["pets"])
+    # stock = len(pet_shop["pets"])
     pet_shop["pets"].append(new_pet)
-    return stock
+    # return stock
 
 #Q14
 def get_customer_cash(customer):
@@ -58,7 +61,7 @@ def get_customer_cash(customer):
 #Q15
 def remove_customer_cash (customer, spent_cash):
     customer["cash"] -= spent_cash
-    return customer["cash"]
+    # return customer["cash"]
 
 #Q16
 def get_customer_pet_count(customer):
@@ -85,8 +88,21 @@ def customer_can_afford_pet(customer, new_pet):
 def sell_pet_to_customer(pet_shop, pet, customer):
    for pet in pet_shop["pets"]:
        if pet["name"] == pet and customer["cash"] >= pet["price"]:
-            pet_shop["admin"]["pets_sold"] += pet
-            pet_shop["admin"]["total_cash"] += pet["price"]
-            customer["cash"] -= pet["price"]
-            customer["pets"].append(pet)
+            # pet_shop["admin"]["pets_sold"] += pet
+            # pet_shop["admin"]["total_cash"] += pet["price"]
+            # customer["cash"] -= pet["price"]
+            # customer["pets"].append(pet)
+
+
             
+            # pet_shop["admin"]["pets_sold"] += pet
+            # customer["cash"] -= pet["price"]
+            # pet_shop["admin"]["total_cash"] += pet["price"]
+            # customer["pets"].append(pet)
+
+
+            remove_pet_by_name(pet_shop, pet["name"])
+            add_or_remove_cash(pet_shop, pet["price"])
+            remove_customer_cash (customer, pet["price"])
+            add_pet_to_customer(customer, pet["name"])
+            increase_pets_sold(pet_shop, 1)
